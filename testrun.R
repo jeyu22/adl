@@ -3,6 +3,7 @@ file <- list.files("./data", full.names = TRUE)
 #task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 #file <- files[task]
 dt <- readRDS(file)
+dt <- dt[,5:18]
 
 loglik_lca <- function(param, data, n.class){
   gammahat <- matrix(c(param[1:n.class-1],1-sum(param[1:n.class-1])),ncol = 1)
@@ -34,7 +35,7 @@ loglik_lca <- function(param, data, n.class){
 #nc <- 4
 #ni <- 5
 # n.param = ni*nc+(nc-1) = 
-n.param <- 11
+n.param <- 29
 nc <- 2
 
 startvalues <- runif(n.param)
@@ -42,7 +43,7 @@ while(sum(startvalues[1:nc-1])>=1){
   startvalues <- runif(n.param)
 }
 
-res <- optim(par = startvalues,method = "L-BFGS-B", fn = loglik_lca, data = dt, n.class = nc,lower = rep(0.00001,n.param), upper = rep(.9999,n.param),hessian = T)
+res <- optim(par = startvalues,method = "L-BFGS-B", fn = loglik_lca, data = dt, n.class = nc,lower = rep(0.00001,n.param), upper = rep(.9999,n.param))
 
 
 all.sum <- list()
@@ -59,6 +60,6 @@ params <- array(params, dim=c(max(dt),ncol(dt),nc))
 dimnames(params)[[3]] <- matrix(c(res$par[1:nc-1],1-sum(res$par[1:nc-1])),ncol = 1)
 ordered_params <- params[, , order(as.numeric(dimnames(params)[[3]]),decreasing = T)]
 
-all.sum <- list(startvalues,ordered_params,res$value,res$convergence,res$hessian)
+all.sum <- list(startvalues,ordered_params,res$value,res$convergence)
 
 all.sum
