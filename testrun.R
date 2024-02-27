@@ -64,5 +64,5 @@ all.sum <- list(startvalues,ordered_params,res$value,res$convergence)
 
 path <- Sys.getenv("BOOT_OUTPUT_DIR")
 loc <- paste0(path,"/test",task,".Rds")
-saveRDS(all.sum,file = path)
+saveRDS(all.sum,file = loc)
 
