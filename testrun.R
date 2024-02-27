@@ -1,6 +1,6 @@
 
 file <- list.files("./data", full.names = TRUE)
-#task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
+task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 #file <- files[task]
 dt <- readRDS(file)
 #dt <- dt[,5:18]
@@ -62,6 +62,7 @@ ordered_params <- params[, , order(as.numeric(dimnames(params)[[3]]),decreasing 
 
 all.sum <- list(startvalues,ordered_params,res$value,res$convergence)
 
-path = Sys.getenv("BOOT_OUTPUT_DIR")
+path <- Sys.getenv("BOOT_OUTPUT_DIR")
+loc <- paste0(path,"/test",task,".Rds")
 saveRDS(all.sum,file = path)
 
