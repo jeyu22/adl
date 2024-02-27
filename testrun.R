@@ -3,7 +3,7 @@ file <- list.files("./data", full.names = TRUE)
 #task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 #file <- files[task]
 dt <- readRDS(file)
-dt <- dt[,5:18]
+#dt <- dt[,5:18]
 
 loglik_lca <- function(param, data, n.class){
   gammahat <- matrix(c(param[1:n.class-1],1-sum(param[1:n.class-1])),ncol = 1)
@@ -35,7 +35,7 @@ loglik_lca <- function(param, data, n.class){
 #nc <- 4
 #ni <- 5
 # n.param = ni*nc+(nc-1) = 
-n.param <- 29
+n.param <- 11
 nc <- 2
 
 startvalues <- runif(n.param)
@@ -62,4 +62,6 @@ ordered_params <- params[, , order(as.numeric(dimnames(params)[[3]]),decreasing 
 
 all.sum <- list(startvalues,ordered_params,res$value,res$convergence)
 
-all.sum
+path = Sys.getenv("BOOT_OUTPUT_DIR")
+saveRDS(all.sum,file = path)
+
