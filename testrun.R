@@ -5,6 +5,18 @@ task <- as.numeric(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 dt <- readRDS(file)
 dt <- dt[,5:18]
 
+# Assuming adl.05 is your data frame
+dt <- as.data.frame(lapply(dt, function(x) {
+  if(is.numeric(x)) {
+    # Apply the transformation logic to numeric columns
+    ifelse(x == 1, 2, ifelse(x == 0, 1, x))
+  } else {
+    # Return non-numeric columns unchanged
+    x
+  }
+}))
+
+
 loglik_lca <- function(param, data, n.class){
   gammahat <- matrix(c(param[1:n.class-1],1-sum(param[1:n.class-1])),ncol = 1)
   
