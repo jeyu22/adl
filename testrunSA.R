@@ -57,6 +57,7 @@ loglik_lca(startvalues,data = dt, n.class = 2)
 n.param <- 29
 nc <- 2
 
+set.seed(100+task) 
 startvalues <- runif(n.param)
 while(sum(startvalues[1:nc-1])>=1){
   startvalues <- runif(n.param)
@@ -66,20 +67,20 @@ res <- optim(par = startvalues,method = "SANN", fn = loglik_lca, data = dt, n.cl
 
 
 all.sum <- list()
-#params <- c()
+params <- c()
 
-#for (i in 1:length(res$par[nc:length(res$par)])) {
-#  params[2 * i - 1] <- res$par[nc:length(res$par)][i]
-#  if (i <= length(res$par[nc:length(res$par)])) {
-#    params[2 * i] <- 1 - res$par[nc:length(res$par)][i]
-#  }
-#}
-#params <- array(params, dim=c(max(dt),ncol(dt),nc))
+for (i in 1:length(res$par[nc:length(res$par)])) {
+  params[2 * i - 1] <- res$par[nc:length(res$par)][i]
+  if (i <= length(res$par[nc:length(res$par)])) {
+    params[2 * i] <- 1 - res$par[nc:length(res$par)][i]
+  }
+}
+params <- array(params, dim=c(max(dt),ncol(dt),nc))
 # ordering classes based on class prevalence  (combat label switching)
-#dimnames(params)[[3]] <- matrix(c(res$par[1:nc-1],1-sum(res$par[1:nc-1])),ncol = 1)
-#ordered_params <- params[, , order(as.numeric(dimnames(params)[[3]]),decreasing = T)]
+dimnames(params)[[3]] <- matrix(c(res$par[1:nc-1],1-sum(res$par[1:nc-1])),ncol = 1)
+ordered_params <- params[, , order(as.numeric(dimnames(params)[[3]]),decreasing = T)]
 
-all.sum <- list(startvalues,res$value,res$convergence,res$par,res$counts,res$message)
+all.sum <- list(startvalues,ordered_params,res$value,res$convergence,res$par,res$counts,res$message)
 
 path <- Sys.getenv("BOOT_OUTPUT_DIR")
 loc <- paste0(path,"/test",task,"SA",".Rds")

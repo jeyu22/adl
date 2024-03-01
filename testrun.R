@@ -53,6 +53,8 @@ loglik_lca <- function(param, data, n.class){
 n.param <- 29
 nc <- 2
 
+set.seed(100+task)
+
 startvalues <- runif(n.param)
 while(sum(startvalues[1:nc-1])>=1){
   startvalues <- runif(n.param)
