@@ -48,8 +48,6 @@ loglik_lca <- function(param, data, n.class){
   return(-loglik)}
 }
 
-loglik_lca(startvalues,data = dt, n.class = 2)
-
 # change later 
 #nc <- 4
 #ni <- 5
