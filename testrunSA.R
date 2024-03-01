@@ -19,7 +19,7 @@ dt <- as.data.frame(lapply(dt, function(x) {
 
 loglik_lca <- function(param, data, n.class){
   
-  if(length(param[param<0 | param> 1]) >0 | (1-sum(param[1:n.class-1]))<=0){return(9999)}else{
+  if(length(param[param<0 | param> 1]) >0 | (1-sum(param[1:n.class-1]))<=0){return(9999999)}else{
     
     
   
