@@ -52,8 +52,8 @@ loglik_lca <- function(param, data, n.class){
 #nc <- 4
 #ni <- 5
 # n.param = ni*nc+(nc-1) = 
-n.param <- 29
-nc <- 2
+n.param <- 44
+nc <- 3
 
 set.seed(100+task) 
 startvalues <- runif(n.param)

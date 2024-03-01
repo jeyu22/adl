@@ -21,7 +21,7 @@ APPTAINER_IMAGE_PATH="/gscratch/scrubbed/${USER}/adl/r-base_4.0.3.sif"
 #	these environment variables are already set. (this is what the :- means)
 #		BOOT_OUTPUT_DIR:
 #			The directory to write the output to
-export BOOT_OUTPUT_DIR="${BOOT_OUTPUT_DIR:-output2}"
+export BOOT_OUTPUT_DIR="${BOOT_OUTPUT_DIR:-output3class_SA}"
 
 RUN_SCRIPT="testrunSA.R"
 
